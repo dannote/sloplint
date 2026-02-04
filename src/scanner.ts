@@ -8,6 +8,7 @@ const AST_RULE_KINDS: Record<string, string[]> = {
   JavaScript: ["catch_clause"],
   java: ["catch_clause"],
   python: ["except_clause"],
+  ruby: ["rescue"],
 }
 
 export function scanSource(

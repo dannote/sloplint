@@ -10,8 +10,9 @@
         "@ast-grep/lang-go": "^0.0.5",
         "@ast-grep/lang-java": "^0.0.6",
         "@ast-grep/lang-python": "^0.0.5",
+        "@ast-grep/lang-ruby": "0.0.6",
         "@ast-grep/lang-rust": "^0.0.6",
-        "@ast-grep/napi": "^0.40.5",
+        "@ast-grep/napi": "0.40.5",
       },
       "devDependencies": {
         "@types/bun": "^1.0.0",
@@ -21,10 +22,11 @@
   "trustedDependencies": [
     "@ast-grep/lang-go",
     "@ast-grep/lang-c",
+    "@ast-grep/lang-ruby",
     "@ast-grep/lang-java",
     "@ast-grep/lang-python",
-    "@ast-grep/lang-cpp",
     "@ast-grep/lang-rust",
+    "@ast-grep/lang-cpp",
   ],
   "packages": {
     "@ast-grep/lang-c": ["@ast-grep/lang-c@0.0.5", "", { "dependencies": { "@ast-grep/setup-lang": "0.0.6" }, "peerDependencies": { "tree-sitter-cli": "0.25.8" }, "optionalPeers": ["tree-sitter-cli"] }, "sha512-UNIPbUehaIZEQ3ALQ/A3Aia1VqF9/B27j1s82DP+A1Z5yQiuZWSCZGJh+hVnUzI+J/JDOTi7BIkdXqU1F74W0g=="],
@@ -36,6 +38,8 @@
     "@ast-grep/lang-java": ["@ast-grep/lang-java@0.0.6", "", { "dependencies": { "@ast-grep/setup-lang": "0.0.6" }, "peerDependencies": { "tree-sitter-cli": "0.25.8" }, "optionalPeers": ["tree-sitter-cli"] }, "sha512-OOxKk6RvMOC+fL+6sItWQmwPMvcQPtZM1/x6dA2WeHtRqqP+NZV3qmSaApXB6ZfP+tmuLFYu7sr7tIVWcI0IlA=="],
 
     "@ast-grep/lang-python": ["@ast-grep/lang-python@0.0.5", "", { "dependencies": { "@ast-grep/setup-lang": "0.0.6" }, "peerDependencies": { "tree-sitter-cli": "0.25.8" }, "optionalPeers": ["tree-sitter-cli"] }, "sha512-gbNwaCPvuyZFEG4y6zwylLRLsh1DWiOeLeZ/aWOlYRR0nxoXimuMPank6psT88rijnD6esBLWhFq6kkFhndzjQ=="],
+
+    "@ast-grep/lang-ruby": ["@ast-grep/lang-ruby@0.0.6", "", { "dependencies": { "@ast-grep/setup-lang": "0.0.6" }, "peerDependencies": { "tree-sitter-cli": "0.25.8" }, "optionalPeers": ["tree-sitter-cli"] }, "sha512-IOGhMm18rApkIgzRLVuyQyI/6AwCeg6yJXqFslNZivRk7w+sugS5Ks4Iicq3yWRYxkNDp4g2GKTZO0ePP1oMrw=="],
 
     "@ast-grep/lang-rust": ["@ast-grep/lang-rust@0.0.6", "", { "dependencies": { "@ast-grep/setup-lang": "0.0.6" }, "peerDependencies": { "tree-sitter-cli": "0.25.8" }, "optionalPeers": ["tree-sitter-cli"] }, "sha512-TZs8QD8SONj2mcoUVTANZF8t4uNlaKw9GE86reeHnczV3uWS44Z6pEAmwE9bJQnl430R6BTnerIitBlncAVqiw=="],
 

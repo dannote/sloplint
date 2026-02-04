@@ -22,13 +22,13 @@ Powered by [ast-grep](https://ast-grep.github.io/) via `@ast-grep/napi` — rule
 
 | Rule | Language | Example |
 |------|----------|---------|
-| `empty-error-handler` | TS/JS/Java/Python | `catch (e) {}` or bare `except:` |
+| `empty-error-handler` | TS/JS/Java/Python/Ruby | `catch (e) {}`, bare `except:`, empty `rescue` |
 | `silent-exception` | Python | `except Exception: pass` |
 | `log-in-error-handler` | TS/JS | `console.log` inside catch |
 
 ## Supported languages
 
-TypeScript, JavaScript, Python, Go, Rust, C, C++, Java
+TypeScript, JavaScript, Python, Go, Rust, C, C++, Java, Ruby
 
 ## Usage
 

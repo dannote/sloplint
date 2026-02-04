@@ -77,10 +77,26 @@ const consoleLogInCatchTS: Rule = {
   },
 }
 
+const emptyRescueRuby: Rule = {
+  id: "empty-error-handler",
+  message: "Empty rescue block silently swallows errors",
+  note: "At minimum, log the error or add a comment explaining why it's safe to ignore.",
+  languages: ["ruby"],
+  check(node, _lang) {
+    if (node.kind() !== "rescue") return null
+    const then = node.children().find((c) => c.kind() === "then")
+    if (!then) return this
+    const stmts = then.children().filter((c) => c.isNamed())
+    if (stmts.length === 0) return this
+    return null
+  },
+}
+
 export const errorHandlingRules: Rule[] = [
   emptyCatchTS,
   emptyCatchJava,
   bareExceptPython,
   passInExceptPython,
   consoleLogInCatchTS,
+  emptyRescueRuby,
 ]

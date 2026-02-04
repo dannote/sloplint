@@ -23,6 +23,7 @@ const SLOP_COMMENTS: Record<string, [string, string][]> = {
     ["c", "// Allocate memory for the array\nint x;"],
     ["cpp", "// Delete the old buffer\nint x;"],
     ["java", "// Initialize the service\nclass Foo {}"],
+    ["ruby", "# Initialize the connection\ndb = connect()"],
   ],
   "narrator-comment": [
     ["typescript", "// This function handles the request\nfunction f() {}"],
@@ -30,6 +31,7 @@ const SLOP_COMMENTS: Record<string, [string, string][]> = {
     ["go", "package main\n// This function creates a new server\nfunc f() {}"],
     ["rust", "// This struct implements the parser\nstruct S;"],
     ["java", "// This method handles the event\nclass Foo {}"],
+    ["ruby", "# This function handles the request\ndef f() end"],
   ],
   "step-comment": [
     ["typescript", "// Step 1: validate\nlet x;"],
@@ -49,6 +51,7 @@ const SLOP_COMMENTS: Record<string, [string, string][]> = {
     ["rust", "// handle remaining cases similarly\nfn main() {}"],
     ["typescript", "// ... remaining implementation\nlet x;"],
     ["java", "// repeat for each item\nclass Foo {}"],
+    ["ruby", "# ... rest of the implementation\ndef f() end"],
   ],
   "apologetic-comment": [
     ["typescript", "// quick hack\nlet x;"],
@@ -57,6 +60,7 @@ const SLOP_COMMENTS: Record<string, [string, string][]> = {
     ["rust", "// temporary fix\nfn main() {}"],
     ["typescript", "// just a placeholder\nlet x;"],
     ["java", "// fix this later\nclass Foo {}"],
+    ["ruby", "# temporary workaround\ndef f() end"],
   ],
   "ai-generated-comment": [
     ["typescript", "// Replace this with your actual implementation\nlet x;"],
@@ -65,6 +69,7 @@ const SLOP_COMMENTS: Record<string, [string, string][]> = {
     ["rust", "// This is just a starting point\nfn main() {}"],
     ["typescript", "// You'll need to add your own logic\nlet x;"],
     ["java", "// Customize as needed\nclass Foo {}"],
+    ["ruby", "# Replace this with your actual implementation\ndef f() end"],
   ],
 }
 
@@ -130,6 +135,18 @@ describe("silent-exception", () => {
   test("Python except with logging passes", () => {
     const hits = scan("try:\n    x()\nexcept Exception as e:\n    print(e)", "python")
     expect(ruleIds(hits)).not.toContain("silent-exception")
+  })
+})
+
+describe("empty-error-handler (ruby)", () => {
+  test("empty rescue", () => {
+    const hits = scan("begin\n  risky\nrescue\nend", "ruby")
+    expect(ruleIds(hits)).toContain("empty-error-handler")
+  })
+
+  test("rescue with body passes", () => {
+    const hits = scan("begin\n  risky\nrescue => e\n  puts e\nend", "ruby")
+    expect(ruleIds(hits)).not.toContain("empty-error-handler")
   })
 })
 

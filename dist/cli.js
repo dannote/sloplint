@@ -12,7 +12,8 @@ import rust from "@ast-grep/lang-rust";
 import c from "@ast-grep/lang-c";
 import cpp from "@ast-grep/lang-cpp";
 import java from "@ast-grep/lang-java";
-registerDynamicLanguage({ python, go, rust, c, cpp, java });
+import ruby from "@ast-grep/lang-ruby";
+registerDynamicLanguage({ python, go, rust, c, cpp, java, ruby });
 var LANGUAGES = {
   typescript: {
     lang: Lang.TypeScript,
@@ -61,6 +62,12 @@ var LANGUAGES = {
     commentKinds: ["line_comment", "block_comment"],
     extensions: ["java"],
     toolDirectives: /checkstyle|SuppressWarnings|PMD|SpotBugs|NOSONAR|noinspection/i
+  },
+  ruby: {
+    lang: "ruby",
+    commentKinds: ["comment"],
+    extensions: ["rb", "rake"],
+    toolDirectives: /rubocop|sorbet|sig|steep|yard|:nocov:|frozen_string_literal/i
   }
 };
 function languageForExtension(ext) {
@@ -291,12 +298,30 @@ var consoleLogInCatchTS = {
     return null;
   }
 };
+var emptyRescueRuby = {
+  id: "empty-error-handler",
+  message: "Empty rescue block silently swallows errors",
+  note: "At minimum, log the error or add a comment explaining why it's safe to ignore.",
+  languages: ["ruby"],
+  check(node, _lang) {
+    if (node.kind() !== "rescue")
+      return null;
+    const then = node.children().find((c2) => c2.kind() === "then");
+    if (!then)
+      return this;
+    const stmts = then.children().filter((c2) => c2.isNamed());
+    if (stmts.length === 0)
+      return this;
+    return null;
+  }
+};
 var errorHandlingRules = [
   emptyCatchTS,
   emptyCatchJava,
   bareExceptPython,
   passInExceptPython,
-  consoleLogInCatchTS
+  consoleLogInCatchTS,
+  emptyRescueRuby
 ];
 
 // src/rules/index.ts
@@ -311,7 +336,8 @@ var AST_RULE_KINDS = {
   TypeScript: ["catch_clause"],
   JavaScript: ["catch_clause"],
   java: ["catch_clause"],
-  python: ["except_clause"]
+  python: ["except_clause"],
+  ruby: ["rescue"]
 };
 function scanSource(source, lang, filename) {
   const root = parse(lang.lang, source).root();

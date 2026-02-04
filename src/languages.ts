@@ -5,8 +5,9 @@ import rust from "@ast-grep/lang-rust"
 import c from "@ast-grep/lang-c"
 import cpp from "@ast-grep/lang-cpp"
 import java from "@ast-grep/lang-java"
+import ruby from "@ast-grep/lang-ruby"
 
-registerDynamicLanguage({ python, go, rust, c, cpp, java })
+registerDynamicLanguage({ python, go, rust, c, cpp, java, ruby })
 
 export interface LanguageConfig {
   lang: string
@@ -67,6 +68,12 @@ export const LANGUAGES: Record<string, LanguageConfig> = {
     extensions: ["java"],
     toolDirectives:
       /checkstyle|SuppressWarnings|PMD|SpotBugs|NOSONAR|noinspection/i,
+  },
+  ruby: {
+    lang: "ruby",
+    commentKinds: ["comment"],
+    extensions: ["rb", "rake"],
+    toolDirectives: /rubocop|sorbet|sig|steep|yard|:nocov:|frozen_string_literal/i,
   },
 }
 
