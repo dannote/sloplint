@@ -14,6 +14,9 @@ Powered by [ast-grep](https://ast-grep.github.io/) via `@ast-grep/napi` — rule
 | `narrator-comment` | `// This function handles the request` |
 | `step-comment` | `// Step 1: Validate input` |
 | `section-divider` | `// ============` or `// --- Helpers ---` |
+| `placeholder-comment` | `// ... rest of the code` or `// omitted for brevity` |
+| `apologetic-comment` | `// quick hack` or `// good enough for now` |
+| `ai-generated-comment` | `// Replace this with your actual implementation` |
 
 **Code patterns** (language-specific):
 

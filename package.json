@@ -1,6 +1,6 @@
 {
   "name": "@dannote/sloplint",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "AST-based multilingual AI slop linter — catches obvious comments, narrator comments, step comments, section dividers, empty catch blocks, and more across 8 languages",
   "license": "MIT",
   "author": "Danila Poyarkov",

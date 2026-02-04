@@ -42,6 +42,30 @@ const SLOP_COMMENTS: Record<string, [string, string][]> = {
     ["python", "# =============================\nx = 1"],
     ["go", "package main\n// --- Utils ---\nfunc f() {}"],
   ],
+  "placeholder-comment": [
+    ["typescript", "// ... rest of the code\nlet x;"],
+    ["python", "# omitted for brevity\nx = 1"],
+    ["go", "package main\n// implementation details omitted\nfunc f() {}"],
+    ["rust", "// handle remaining cases similarly\nfn main() {}"],
+    ["typescript", "// ... remaining implementation\nlet x;"],
+    ["java", "// repeat for each item\nclass Foo {}"],
+  ],
+  "apologetic-comment": [
+    ["typescript", "// quick hack\nlet x;"],
+    ["python", "# good enough for now\nx = 1"],
+    ["go", "package main\n// dirty hack\nfunc f() {}"],
+    ["rust", "// temporary fix\nfn main() {}"],
+    ["typescript", "// just a placeholder\nlet x;"],
+    ["java", "// fix this later\nclass Foo {}"],
+  ],
+  "ai-generated-comment": [
+    ["typescript", "// Replace this with your actual implementation\nlet x;"],
+    ["python", "# Add your code here\nx = 1"],
+    ["go", "package main\n// In a real application you would handle this\nfunc f() {}"],
+    ["rust", "// This is just a starting point\nfn main() {}"],
+    ["typescript", "// You'll need to add your own logic\nlet x;"],
+    ["java", "// Customize as needed\nclass Foo {}"],
+  ],
 }
 
 for (const [ruleId, cases] of Object.entries(SLOP_COMMENTS)) {

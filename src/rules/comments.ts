@@ -10,6 +10,15 @@ const NARRATOR_PATTERN =
 
 const STEP_PATTERN = /^(?:\/\/|#|\/\*\*?)\s*step\s+\d/i
 
+const PLACEHOLDER_PATTERN =
+  /^(?:\/\/|#|\/\*\*?)\s*(?:(?:\.\.\.|…)\s*(?:rest of|more|remaining|implementation|logic|code|here|functionality|similarly|and so on|etc|as above)|(?:omitted|truncated)\s+for\s+brevity|implementation details omitted|repeat (?:for each|as needed)|handle (?:other|remaining) cases similarly|similar for other cases)/i
+
+const APOLOGETIC_PATTERN =
+  /^(?:\/\/|#|\/\*\*?)\s*(?:sorry,? this is a (?:quick )?hack|(?:quick|ugly|dirty|nasty) hack|(?:quick|dirty|naive) solution|not the best way but works|I know this is bad|(?:temporary|temp) (?:fix|workaround|solution|implementation|code)|(?:fix|refactor|implement|do|clean up) (?:this )?later|(?:good|fine|okay|ok|simple|works|good enough) for now|simplified (?:version|implementation|logic)|(?:basic|minimal|naive) approach|just a placeholder)/i
+
+const AI_SPECIFIC_PATTERN =
+  /^(?:\/\/|#|\/\*\*?)\s*(?:As an AI,? I cannot|I'll leave this for you to (?:implement|complete|finish)|You'll need to add your own|Replace this with your (?:actual|real|own) implementation|Add your (?:code|logic) here|Insert your (?:logic|code|handling) here|Customize (?:as needed|according to your needs)|Modify (?:according to|based on) your needs|This is a (?:simplified|basic|example) (?:example|version|implementation)|In a real application,? you (?:would|should)|For production,? (?:consider|make sure to)|In practice,? you (?:should|might want to)|This is just a starting point)/i
+
 const DIVIDER_PATTERNS = [
   /^(?:\/\/|#)\s*[-=~#*]{3,}/,
   /^(?:\/\/|#)\s*#{1,3}\s/i,
@@ -17,7 +26,7 @@ const DIVIDER_PATTERNS = [
 ]
 
 const KEEPER_PATTERN =
-  /TODO|FIXME|HACK|NOTE|SAFETY|WARN|BUG|XXX|PERF|IMPORTANT|LICENSE|COPYRIGHT/i
+  /\bTODO\b|\bFIXME\b|\bHACK\b|\bNOTE\b|\bSAFETY\b|\bWARN\b|\bBUG\b|\bXXX\b|\bPERF\b|\bIMPORTANT\b|\bLICENSE\b|\bCOPYRIGHT\b/
 
 function isComment(node: SgNode, lang: LanguageConfig): boolean {
   return lang.commentKinds.includes(node.kind())
@@ -88,9 +97,51 @@ const sectionDivider: Rule = {
   },
 }
 
+const placeholderComment: Rule = {
+  id: "placeholder-comment",
+  message: "Placeholder comment — this code is incomplete",
+  note: 'Comments like "... rest of the code" or "omitted for brevity" mean the implementation was never finished.',
+  check(node, lang) {
+    const text = commentText(node)
+    if (!isComment(node, lang)) return null
+    if (shouldKeep(text, lang)) return null
+    if (!PLACEHOLDER_PATTERN.test(text)) return null
+    return this
+  },
+}
+
+const apologeticComment: Rule = {
+  id: "apologetic-comment",
+  message: "Apologetic comment — fix the code instead of apologizing for it",
+  note: 'Comments admitting "this is a hack" or "good enough for now" are a sign the code needs actual improvement, not an apology.',
+  check(node, lang) {
+    const text = commentText(node)
+    if (!isComment(node, lang)) return null
+    if (shouldKeep(text, lang)) return null
+    if (!APOLOGETIC_PATTERN.test(text)) return null
+    return this
+  },
+}
+
+const aiSpecificComment: Rule = {
+  id: "ai-generated-comment",
+  message: "AI-generated placeholder — the AI left a note instead of writing the code",
+  note: "The AI assistant admitted it didn't finish the job. Replace the comment with an actual implementation.",
+  check(node, lang) {
+    const text = commentText(node)
+    if (!isComment(node, lang)) return null
+    if (shouldKeep(text, lang)) return null
+    if (!AI_SPECIFIC_PATTERN.test(text)) return null
+    return this
+  },
+}
+
 export const commentRules: Rule[] = [
   obviousComment,
   narratorComment,
   stepComment,
   sectionDivider,
+  placeholderComment,
+  apologeticComment,
+  aiSpecificComment,
 ]

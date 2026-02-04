@@ -29,6 +29,15 @@ function helper() {}
 // --- Utils ---
 function util() {}
 
+// ... rest of the code
+function unfinished() {}
+
+// good enough for now
+function messyHack() {}
+
+// Replace this with your actual implementation
+function placeholder() {}
+
 // Wire format: 4-byte LE header followed by varint-encoded payload length
 function parseHeader(buf: Buffer) {
   return buf.readUInt32LE(0);
