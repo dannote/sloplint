@@ -12,7 +12,7 @@
   "bugs": "https://github.com/dannote/sloplint/issues",
   "type": "module",
   "bin": {
-    "sloplint": "./dist/cli.js"
+    "sloplint": "dist/cli.js"
   },
   "files": [
     "dist",
