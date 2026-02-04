@@ -31,13 +31,13 @@ TypeScript, JavaScript, Python, Go, Rust, C, C++, Java
 
 ```sh
 # scan a directory
-bunx sloplint src/
+npx @dannote/sloplint src/
 
 # scan specific files
-bunx sloplint main.ts utils.py server.go
+npx @dannote/sloplint main.ts utils.py server.go
 
 # scan everything
-bunx sloplint .
+npx @dannote/sloplint .
 ```
 
 Exits with code 1 if any problems are found.
@@ -56,7 +56,7 @@ Tool directives are also skipped: `eslint-disable`, `noqa`, `nolint`, `NOLINT`, 
 ## Install
 
 ```sh
-bun add -D sloplint
+npm install -D @dannote/sloplint
 ```
 
 ## Philosophy
