@@ -1,0 +1,33 @@
+{
+  "name": "sloplint",
+  "version": "0.1.0",
+  "description": "AST-based multilingual AI slop linter",
+  "type": "module",
+  "bin": {
+    "sloplint": "./src/cli.ts"
+  },
+  "scripts": {
+    "lint": "bun run src/cli.ts",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@ast-grep/lang-c": "^0.0.5",
+    "@ast-grep/lang-cpp": "^0.0.5",
+    "@ast-grep/lang-go": "^0.0.5",
+    "@ast-grep/lang-java": "^0.0.6",
+    "@ast-grep/lang-python": "^0.0.5",
+    "@ast-grep/lang-rust": "^0.0.6",
+    "@ast-grep/napi": "^0.40.5"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.0.0"
+  },
+  "trustedDependencies": [
+    "@ast-grep/lang-python",
+    "@ast-grep/lang-go",
+    "@ast-grep/lang-rust",
+    "@ast-grep/lang-c",
+    "@ast-grep/lang-cpp",
+    "@ast-grep/lang-java"
+  ]
+}
